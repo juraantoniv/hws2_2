@@ -17,7 +17,7 @@ import s2 from '../../s1-main/App.module.css'
 * */
 
 // types
-export type AffairPriorityType = string// need to fix any
+export type AffairPriorityType = 'high' | 'low' |'middle' // need to fix any
 export type AffairType = {
     _id: number
     name: string // need to fix any
@@ -35,21 +35,17 @@ const defaultAffairs: Array<AffairType> = [ // need to fix any
 ]
 
 // pure helper functions
-export const filterAffairs = (affairs: Array<AffairType>, filter: string)=>{
+export const filterAffairs = (affairs: Array<AffairType>, filter: FilterType)=>{
 
-    if (filter==='all'){
-
-        affairs = affairs.map(el=>el)
+    if (filter !== 'all'){
+       return  affairs.filter(el=>el.priority==filter)
     }
-   else {
-        affairs = affairs.filter(el=>el.priority==filter)
+    else {
+        return  affairs
     }
-
-    return affairs // need to fix
 }
-export const deleteAffair = (affairs:AffairType, _id: number)=> { // need to fix any
-
-    return affairs // need to fix
+export const deleteAffair = (affairs:Array<AffairType>, _id: number)=> { // need to fix any
+    return  affairs.filter(el=>el._id!==_id) // need to fix
 }
 
 function HW2() {
@@ -59,8 +55,8 @@ function HW2() {
 
     const filteredAffairs = filterAffairs(affairs, filter)
     const deleteAffairCallback = (_id: number) => { // need to fix any
-        let newAffairs = affairs.filter(el=>el._id!==_id)
-        setAffairs(newAffairs)
+        const deletedAffair = deleteAffair(affairs, _id)
+        setAffairs(deletedAffair)
     }
 
     return (
